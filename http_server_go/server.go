@@ -142,6 +142,7 @@ func handleFiles(req *Request) []byte {
 		} else {
 			if _, err := os.Stat(fullPath); err == nil {
 				file, _ := os.Open(fullPath)
+				defer file.Close()			
 				contents, _ := io.ReadAll(file)
 				responseHeaders["Content-Type"] = "application/octet-stream"
 				return NewResponseString(200, responseHeaders, string(contents))
